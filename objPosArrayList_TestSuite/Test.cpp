@@ -93,11 +93,11 @@ void testInsertHead_5Element()
 
 	// Insert 4 body elements, then 1 unique head element
 	objPosArrayList thisList;
-	thisList.insertHead(bodyPos);
-	thisList.insertHead(bodyPos);
-	thisList.insertHead(bodyPos);
-	thisList.insertHead(bodyPos);
-	thisList.insertHead(headPos);
+	thisList.insertHead(bodyPos); std::cout << "done \n";
+	thisList.insertHead(bodyPos); std::cout << "done \n";
+	thisList.insertHead(bodyPos); std::cout << "done \n";
+	thisList.insertHead(bodyPos); std::cout << "done \n";
+	thisList.insertHead(headPos); std::cout << "done \n";
 
 	int expectedSize = 5;
 	int actualSize = thisList.getSize();

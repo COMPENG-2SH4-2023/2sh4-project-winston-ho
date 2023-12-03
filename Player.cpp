@@ -1,16 +1,12 @@
 #include "Player.h"
 
-// define a default constructor that is invalid, so that c++ doesnt throw an errors
-Player::Player(){
-}
-
 Player::Player(GameMechs* thisGMRef)
 {
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
 
     // more actions to be included
-    playerPos = objPos(5, 10, '*');
+    playerPos = objPos(10, 5, '*');
 }
 
 
@@ -70,7 +66,8 @@ void Player::updatePlayerDir()
             break;
     }
 
-    input = NULL; // reset input to nothing after processing action
+    input = 0; // reset input to nothing after processing action
+
 }
 
 void Player::movePlayer()
@@ -97,6 +94,30 @@ void Player::movePlayer()
 
         default:
             break;
+    }
+
+    // border wraparound vars
+    int boardX, boardY;
+
+    boardX =  mainGameMechsRef->getBoardSizeX();
+    boardY =  mainGameMechsRef->getBoardSizeY();
+    
+    // check for border wraparound
+    // top side border
+    if (playerPos.y == 0){
+        playerPos.y = boardY - 2;
+    }
+    // bottom side border
+    else if (playerPos.y == boardY - 1){
+        playerPos.y = 1;
+    }
+    // left side border
+    else if (playerPos.x == 0){
+        playerPos.x = boardX - 2;
+    }
+    // right side border
+    else if (playerPos.x == boardX - 1){
+        playerPos.x = 1;
     }
 }
 

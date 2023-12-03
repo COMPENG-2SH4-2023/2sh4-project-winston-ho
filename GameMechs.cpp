@@ -17,6 +17,7 @@ GameMechs::GameMechs(int boardX, int boardY)
 
     score = 0;
 
+    generateFood();
 }
 
 // do you need a destructor?

@@ -56,7 +56,7 @@ void GetInput(void)
 
     // if there is input, read and save the character
     if (isInput){
-        MacUILib_printf("setting input\n");
+        // MacUILib_printf("setting input\n");
         game->setInput(MacUILib_getChar());
     }
 }
@@ -65,6 +65,17 @@ void RunLogic(void)
 {
     player->updatePlayerDir();
     player->movePlayer();
+
+    // check if on food position
+    objPos foodPos, playerPos; 
+    player->getPlayerPos(playerPos);
+    game->getFoodPos(foodPos);
+
+    // regenerate food and increment score if food touched
+    if (foodPos.x == playerPos.x && foodPos.y == playerPos.y){
+        game->generateFood();
+        game->incrementScore();
+    }
 }
 
 void DrawScreen(void)
@@ -73,10 +84,11 @@ void DrawScreen(void)
     int row, col; // looping vars
     int boardX, boardY; // size of the x/y of the grid
 
-    objPos playerData;
+    objPos playerData, foodPos;
 
     // get inital information
     player->getPlayerPos(playerData);
+    game->getFoodPos(foodPos);
 
     boardX = game->getBoardSizeX();
     boardY = game->getBoardSizeY();
@@ -84,7 +96,7 @@ void DrawScreen(void)
     // clear the current screen contents
     MacUILib_clearScreen();
 
-    // // display the grid
+    // display the grid
     for (row = 0; row < boardY; row ++){
         for (col = 0; col < boardX; col ++){
 
@@ -97,6 +109,9 @@ void DrawScreen(void)
                 MacUILib_printf("#");
             }
             // TODO: check if food
+            else if (foodPos.x == col && foodPos.y == row){
+                MacUILib_printf("%c", foodPos.symbol);
+            }
             // else, print a space
             else {
                 MacUILib_printf(" ");
@@ -111,8 +126,9 @@ void DrawScreen(void)
     game->clearInput();
 
     // DEBUG
-    MacUILib_printf("game->getExitFlagStatus(), %d\n", game->getExitFlagStatus());
-    MacUILib_printf("boardY: %d, boardX: %d\n", boardY, boardX);
+    MacUILib_printf("score, %d\n", game->getScore());
+    MacUILib_printf("playerData.x: %d, playerData.y: %d\n", playerData.x, playerData.y);
+    MacUILib_printf("foodPos.x: %d, foodPos.y: %d\n", foodPos.x, foodPos.y);
 }
 
 void LoopDelay(void)

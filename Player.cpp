@@ -1,5 +1,6 @@
 #include "Player.h"
 
+// define a default constructor that is invalid, so that c++ doesnt throw an errors
 Player::Player(){
 }
 

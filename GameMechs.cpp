@@ -1,16 +1,14 @@
 #include "GameMechs.h"
+#include "MacUILib.h"
 
 #define DEFAULT_GRID_LENGTH 20
 #define DEFAULT_GRID_HEIGHT 10
 
-GameMechs::GameMechs()
-{
-    GameMechs(DEFAULT_GRID_LENGTH, DEFAULT_GRID_HEIGHT); // default sizes, 20x10
-}
+GameMechs::GameMechs() : GameMechs(DEFAULT_GRID_LENGTH, DEFAULT_GRID_HEIGHT){}; // default sizes, 20x10
 
 GameMechs::GameMechs(int boardX, int boardY)
 {
-    input = NULL;
+    input = 0;
     exitFlag = false;
     loseFlag = false;
 
@@ -18,6 +16,7 @@ GameMechs::GameMechs(int boardX, int boardY)
     boardSizeY = boardY;
 
     score = 0;
+
 }
 
 // do you need a destructor?
@@ -88,6 +87,6 @@ void GameMechs::setInput(char this_input)
 
 void GameMechs::clearInput()
 {
-    input = NULL;
+    input = 0;
 }
 

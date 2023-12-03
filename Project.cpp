@@ -56,6 +56,7 @@ void GetInput(void)
 
     // if there is input, read and save the character
     if (isInput){
+        MacUILib_printf("setting input\n");
         game->setInput(MacUILib_getChar());
     }
 }
@@ -84,27 +85,27 @@ void DrawScreen(void)
     MacUILib_clearScreen();
 
     // // display the grid
-    // for (row = 0; row < boardY; row ++){
-    //     for (col = 0; col < boardX; col ++){
+    for (row = 0; row < boardY; row ++){
+        for (col = 0; col < boardX; col ++){
 
-    //         // check for character
-    //         if (playerData.x == col && playerData.y == row){
-    //             MacUILib_printf("%c", playerData.symbol);
-    //         }
-    //         // check if wall
-    //         else if ((row == 0) || (row == boardX - 1) || (col == 0) || (col == boardY - 1)){
-    //             MacUILib_printf("#");
-    //         }
-    //         // TODO: check if food
-    //         // else, print a space
-    //         else {
-    //             MacUILib_printf(" ");
-    //         }
+            // check for character
+            if (playerData.x == col && playerData.y == row){
+                MacUILib_printf("%c", playerData.symbol);
+            }
+            // check if wall
+            else if ((row == 0) || (row == boardY - 1) || (col == 0) || (col == boardX - 1)){
+                MacUILib_printf("#");
+            }
+            // TODO: check if food
+            // else, print a space
+            else {
+                MacUILib_printf(" ");
+            }
             
-    //     }
-    //     // format each line
-    //     MacUILib_printf("\n");
-    // }
+        }
+        // format each line
+        MacUILib_printf("\n");
+    }
 
     // reset data for next iteration
     game->clearInput();
@@ -117,6 +118,7 @@ void DrawScreen(void)
 void LoopDelay(void)
 {
     MacUILib_Delay(DELAY_CONST); // 0.1s delay
+    // MacUILib_Delay(999999);
 }
 
 

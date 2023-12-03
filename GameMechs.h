@@ -3,6 +3,7 @@
 
 #include <cstdlib>
 #include <time.h>
+#include <stdlib.h> // rng lib
 
 #include "objPos.h"
 #include "objPosArrayList.h"
@@ -21,9 +22,14 @@ class GameMechs
     private:
         char input;
         bool exitFlag;
+        bool loseFlag;
+
+        int score;
         
         int boardSizeX;
         int boardSizeY;
+
+        objPos foodPos;
 
     public:
         GameMechs();
@@ -32,6 +38,9 @@ class GameMechs
         bool getExitFlagStatus();
         void setExitTrue();
 
+        bool getLoseFlagStatus();
+        void setLoseTrue();
+
         char getInput();
         void setInput(char this_input);
         void clearInput();
@@ -39,7 +48,11 @@ class GameMechs
         int getBoardSizeX();
         int getBoardSizeY();
       
+        void generateFood();
+        void getFoodPos(objPos &returnPos);
 
+        void incrementScore();
+        int getScore();
 };
 
 #endif

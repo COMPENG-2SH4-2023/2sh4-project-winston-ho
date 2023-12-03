@@ -25,6 +25,13 @@ class objPosArrayList
         void getHeadElement(objPos &returnPos);
         void getTailElement(objPos &returnPos);
         void getElement(objPos &returnPos, int index);
+
+        // return:
+        // -1: could not find
+        // any_other_int: the index of the found object
+        // strictMatchSymbol: default false 
+        // if false, only need to have same coordinates to match. if true, must also match symbol
+        int find(objPos toFind, bool strictMatchSymbol); 
 };
 
 #endif

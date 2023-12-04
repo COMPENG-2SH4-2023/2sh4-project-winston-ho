@@ -120,10 +120,10 @@ void objPosArrayList::getElement(objPos &returnPos, int index)
 // any_other_int: the index of the found object
 // strictMatchSymbol: default false 
 // if false, only need to have same coordinates to match. if true, must also match symbol
-int objPosArrayList::find(objPos toFind, bool strictMatchSymbol = false)
+int objPosArrayList::find(objPos toFind, bool strictMatchSymbol = false, int startingIndexToCheck = 0)
 {
     // see if we can find the element
-    for (int i = 0; i < sizeList; i ++){
+    for (int i = startingIndexToCheck; i < sizeList; i ++){
         if (strictMatchSymbol){
             // check equality for all elements
             if (toFind.x == aList[i].x && toFind.y == aList[i].y && toFind.symbol == aList[i].symbol){
@@ -143,4 +143,8 @@ int objPosArrayList::find(objPos toFind, bool strictMatchSymbol = false)
 
 int objPosArrayList::find(int x, int y){
     return find({x, y, ' '}, false);
+}
+
+int objPosArrayList::find(int x, int y, int startingIndexToCheck){
+    return find({x, y, ' '}, false, startingIndexToCheck);
 }

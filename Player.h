@@ -27,6 +27,8 @@ class Player
 
         // does not modify anyhting. simply moves forward 1 space, then check if it would collide with the position
         bool checkForFutureCollision(objPos position);
+        // checks head against its body for collision
+        bool checkIfSelfCollision();
 
     private:
         objPosArrayList* playerPos;   // Upgrade this in iteration 3.       

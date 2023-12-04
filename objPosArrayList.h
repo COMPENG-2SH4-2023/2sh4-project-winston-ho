@@ -31,8 +31,9 @@ class objPosArrayList
         // any_other_int: the index of the found object
         // strictMatchSymbol: default false 
         // if false, only need to have same coordinates to match. if true, must also match symbol
-        int find(objPos toFind, bool strictMatchSymbol); 
+        int find(objPos toFind, bool strictMatchSymbol, int startingIndexToCheck); 
         int find(int x, int y);
+        int find(int x, int y, int startingIndexToCheck); // checks left to right. strartingIndex changes which index to start at
 };
 
 #endif

@@ -86,6 +86,12 @@ void RunLogic(void)
         game->generateFood(snakePositions);
         game->incrementScore();
     }
+
+    // check if self collision. if collision, set lose flag to true
+    if (player->checkIfSelfCollision()){
+        game->setLoseTrue();
+        game->setExitTrue();
+    }
 }
 
 void DrawScreen(void)
@@ -138,11 +144,13 @@ void DrawScreen(void)
     // reset data for next iteration
     game->clearInput();
 
-    // DEBUG
+    // display score and other data to user 
     MacUILib_printf("score %d\n", game->getScore());
-    MacUILib_printf("snake size %d\n", playerData.getSize());
-    MacUILib_printf("head(x,y): %d %d\n", samplePlayerElem.x, samplePlayerElem.y);
-    MacUILib_printf("foodPos.x: %d, foodPos.y: %d\n", foodPos.x, foodPos.y);
+    
+    // DEBUG
+    // MacUILib_printf("snake size %d\n", playerData.getSize());
+    // MacUILib_printf("head(x,y): %d %d\n", samplePlayerElem.x, samplePlayerElem.y);
+    // MacUILib_printf("foodPos.x: %d, foodPos.y: %d\n", foodPos.x, foodPos.y);
 
     // objPos a;
     // for (int i = 0; i < playerData.getSize(); i ++){
@@ -161,6 +169,10 @@ void LoopDelay(void)
 void CleanUp(void)
 {
     MacUILib_clearScreen();    
+
+    // print final message
+    MacUILib_printf("You have lost!\n");
+    MacUILib_printf("Score: %d\n", game->getScore());
   
     MacUILib_uninit();
 

@@ -206,3 +206,21 @@ bool Player::checkForFutureCollision(objPos position){
     }
     return false;
 }
+
+bool Player::checkIfSelfCollision(){
+    objPos head;
+    int size;
+
+    playerPos->getHeadElement(head);
+    size = playerPos->getSize();
+
+    // only check if size is greater than 1 element
+    if (size > 1){
+        // check head against the rest of the body for collisions
+        if (playerPos->find(head, false, 1) != -1){
+            return true;
+        }
+    }
+
+    return false;
+}

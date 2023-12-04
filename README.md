@@ -2,11 +2,11 @@
 # COE2SH4-PPA3Template
 Project Preparation Activity 3
 
-You must watch the briefing video and read through the manual to engage in the development activities.
+Please note: Since I am working alone, Scott has allowed me to only have to finish up to Iteration 3 Feature 1 for full marks. This means that there is no lose flag or snake collision implemented. You can check with Scott, I had sent him a message in Teams to clarify this.
 
 
-Section: [Insert your lab section]
+Section: [L04]
 
-MacID: [Insert your macID here]
+MacID: [how20]
 
-StudentID: [Insert your numerical student ID here]
+StudentID: [400462310]

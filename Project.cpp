@@ -11,6 +11,7 @@ using namespace std;
 // define classes for use in program
 Player *player;
 GameMechs *game;
+objPosArrayList playerData;
 
 void Initialize(void);
 void GetInput(void);
@@ -65,7 +66,6 @@ void RunLogic(void)
 {
     bool willCollideWithFood = false;
     objPos foodPos;
-    objPosArrayList snakePositions;
 
     // check for food position
     game->getFoodPos(foodPos);
@@ -81,9 +81,9 @@ void RunLogic(void)
 
     // regenerate food and increment score if food touched
     if (willCollideWithFood){
-        player->getPlayerPos(snakePositions);
+        player->getPlayerPos(playerData);
 
-        game->generateFood(snakePositions);
+        game->generateFood(playerData);
         game->incrementScore();
     }
 }
@@ -95,7 +95,7 @@ void DrawScreen(void)
     int boardX, boardY; // size of the x/y of the grid
 
     objPos foodPos, samplePlayerElem;
-    objPosArrayList playerData;
+    
 
     // get inital information
     player->getPlayerPos(playerData);
@@ -140,9 +140,9 @@ void DrawScreen(void)
 
     // DEBUG
     MacUILib_printf("score %d\n", game->getScore());
-    MacUILib_printf("snake size %d\n", playerData.getSize());
-    MacUILib_printf("head(x,y): %d %d\n", samplePlayerElem.x, samplePlayerElem.y);
-    MacUILib_printf("foodPos.x: %d, foodPos.y: %d\n", foodPos.x, foodPos.y);
+    // MacUILib_printf("snake size %d\n", playerData.getSize());
+    // MacUILib_printf("head(x,y): %d %d\n", samplePlayerElem.x, samplePlayerElem.y);
+    // MacUILib_printf("foodPos.x: %d, foodPos.y: %d\n", foodPos.x, foodPos.y);
 
     // objPos a;
     // for (int i = 0; i < playerData.getSize(); i ++){

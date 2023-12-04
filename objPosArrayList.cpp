@@ -31,7 +31,7 @@ void objPosArrayList::insertHead(objPos thisPos)
     }
 
     // shift all elements forward in prep for front insert
-    for (int i = sizeList - 2; i > 0; i --){
+    for (int i = sizeList - 2; i >= 0; i --){
         // std::cout << "Accessing " << i+1 << ", " << i << "\n";
         aList[i+1] = aList[i]; 
     }
@@ -139,4 +139,8 @@ int objPosArrayList::find(objPos toFind, bool strictMatchSymbol = false)
     }
     // return -1 if nothing matched
     return -1;
+}
+
+int objPosArrayList::find(int x, int y){
+    return find({x, y, ' '}, false);
 }

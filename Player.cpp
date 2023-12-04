@@ -6,7 +6,8 @@ Player::Player(GameMechs* thisGMRef)
     myDir = STOP;
 
     // more actions to be included
-    playerPos = objPos(10, 5, '*');
+    playerPos = new objPosArrayList();
+    playerPos->insertHead({10, 5, '*'}); // insert starting element
 }
 
 
@@ -15,10 +16,10 @@ Player::~Player()
     // delete any heap members here
 }
 
-void Player::getPlayerPos(objPos &returnPos)
+void Player::getPlayerPos(objPosArrayList &returnPos)
 {
     // return the reference to the playerPos arrray list
-    returnPos = playerPos;
+    returnPos = *playerPos;
 }
 
 void Player::updatePlayerDir()
@@ -70,26 +71,29 @@ void Player::updatePlayerDir()
 
 }
 
-void Player::movePlayer()
+void Player::movePlayer(bool deleteTailElem = true)
 {
+    // the next position the snake head will be, init to current head to calculate next position
+    objPos next;
+    playerPos->getHeadElement(next);
 
     // PPA3 Finite State Machine logic
     switch(myDir){
 
         case LEFT:
-            playerPos.x --;
+            next.x --;
             break;
 
         case RIGHT:
-            playerPos.x ++;
+            next.x ++;
             break;
 
         case UP:
-            playerPos.y --;
+            next.y --;
             break;
 
         case DOWN:
-            playerPos.y ++;
+            next.y ++;
             break;
 
         default:
@@ -104,20 +108,101 @@ void Player::movePlayer()
     
     // check for border wraparound
     // top side border
-    if (playerPos.y == 0){
-        playerPos.y = boardY - 2;
+    if (next.y == 0){
+        next.y = boardY - 2;
     }
     // bottom side border
-    else if (playerPos.y == boardY - 1){
-        playerPos.y = 1;
+    else if (next.y == boardY - 1){
+        next.y = 1;
     }
     // left side border
-    else if (playerPos.x == 0){
-        playerPos.x = boardX - 2;
+    else if (next.x == 0){
+        next.x = boardX - 2;
     }
     // right side border
-    else if (playerPos.x == boardX - 1){
-        playerPos.x = 1;
+    else if (next.x == boardX - 1){
+        next.x = 1;
     }
+
+    // MacUILib_printf("state before:\n");
+    // objPos a;
+    // for (int i = 0; i < playerPos->getSize(); i ++){
+    //     playerPos->getElement(a, i);
+    //     MacUILib_printf("position(x,y): %d %d ", a.x, a.y);
+    // }
+
+    // add the new element to array at front
+    playerPos->insertHead(next);
+
+    // delete the tail if food was not collected
+    if (deleteTailElem){
+        playerPos->removeTail();
+    }
+
+    // MacUILib_printf("\nstate after:\n");
+    // for (int i = 0; i < playerPos->getSize(); i ++){
+    //     playerPos->getElement(a, i);
+    //     MacUILib_printf("position(x,y): %d %d ", a.x, a.y);
+    // }
+
+    // MacUILib_printf("\n");
 }
 
+bool Player::checkForFutureCollision(objPos position){
+    // the next position the snake head will be, init to current head to calculate next position
+    objPos next;
+    playerPos->getHeadElement(next);
+
+    // PPA3 Finite State Machine logic
+    switch(myDir){
+
+        case LEFT:
+            next.x --;
+            break;
+
+        case RIGHT:
+            next.x ++;
+            break;
+
+        case UP:
+            next.y --;
+            break;
+
+        case DOWN:
+            next.y ++;
+            break;
+
+        default:
+            break;
+    }
+
+    // border wraparound vars
+    int boardX, boardY;
+
+    boardX =  mainGameMechsRef->getBoardSizeX();
+    boardY =  mainGameMechsRef->getBoardSizeY();
+    
+    // check for border wraparound
+    // top side border
+    if (next.y == 0){
+        next.y = boardY - 2;
+    }
+    // bottom side border
+    else if (next.y == boardY - 1){
+        next.y = 1;
+    }
+    // left side border
+    else if (next.x == 0){
+        next.x = boardX - 2;
+    }
+    // right side border
+    else if (next.x == boardX - 1){
+        next.x = 1;
+    }
+
+    // check if will collide with position
+    if (next.x == position.x && next.y == position.y){
+        return true;
+    }
+    return false;
+}

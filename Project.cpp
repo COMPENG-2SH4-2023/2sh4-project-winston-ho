@@ -63,17 +63,27 @@ void GetInput(void)
 
 void RunLogic(void)
 {
-    player->updatePlayerDir();
-    player->movePlayer();
+    bool willCollideWithFood = false;
+    objPos foodPos;
+    objPosArrayList snakePositions;
 
-    // check if on food position
-    objPos foodPos, playerPos; 
-    player->getPlayerPos(playerPos);
+    // check for food position
     game->getFoodPos(foodPos);
 
+    // update direction, but not position, to cehck if we would collide with food
+    player->updatePlayerDir();
+
+    // check if it will collide with the food
+    willCollideWithFood = player->checkForFutureCollision(foodPos);
+
+    // move the player, and remove (or not remove) depedning on if food was collected
+    player->movePlayer(!willCollideWithFood);
+
     // regenerate food and increment score if food touched
-    if (foodPos.x == playerPos.x && foodPos.y == playerPos.y){
-        game->generateFood();
+    if (willCollideWithFood){
+        player->getPlayerPos(snakePositions);
+
+        game->generateFood(snakePositions);
         game->incrementScore();
     }
 }
@@ -84,10 +94,12 @@ void DrawScreen(void)
     int row, col; // looping vars
     int boardX, boardY; // size of the x/y of the grid
 
-    objPos playerData, foodPos;
+    objPos foodPos, samplePlayerElem;
+    objPosArrayList playerData;
 
     // get inital information
     player->getPlayerPos(playerData);
+    playerData.getHeadElement(samplePlayerElem);
     game->getFoodPos(foodPos);
 
     boardX = game->getBoardSizeX();
@@ -101,8 +113,9 @@ void DrawScreen(void)
         for (col = 0; col < boardX; col ++){
 
             // check for character
-            if (playerData.x == col && playerData.y == row){
-                MacUILib_printf("%c", playerData.symbol);
+            // if -1, that means player is not there. so we check for when it is not equal to -1 here to find the player
+            if (playerData.find(col, row) != -1){ 
+                MacUILib_printf("%c", samplePlayerElem.symbol);
             }
             // check if wall
             else if ((row == 0) || (row == boardY - 1) || (col == 0) || (col == boardX - 1)){
@@ -126,9 +139,16 @@ void DrawScreen(void)
     game->clearInput();
 
     // DEBUG
-    MacUILib_printf("score, %d\n", game->getScore());
-    MacUILib_printf("playerData.x: %d, playerData.y: %d\n", playerData.x, playerData.y);
+    MacUILib_printf("score %d\n", game->getScore());
+    MacUILib_printf("snake size %d\n", playerData.getSize());
+    MacUILib_printf("head(x,y): %d %d\n", samplePlayerElem.x, samplePlayerElem.y);
     MacUILib_printf("foodPos.x: %d, foodPos.y: %d\n", foodPos.x, foodPos.y);
+
+    // objPos a;
+    // for (int i = 0; i < playerData.getSize(); i ++){
+    //     playerData.getElement(a, i);
+    //     MacUILib_printf("position(x,y): %d %d\n", a.x, a.y);
+    // }
 }
 
 void LoopDelay(void)

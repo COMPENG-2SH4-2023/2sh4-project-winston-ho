@@ -32,6 +32,7 @@ class objPosArrayList
         // strictMatchSymbol: default false 
         // if false, only need to have same coordinates to match. if true, must also match symbol
         int find(objPos toFind, bool strictMatchSymbol); 
+        int find(int x, int y);
 };
 
 #endif

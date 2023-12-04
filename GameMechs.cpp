@@ -57,8 +57,24 @@ int GameMechs::getScore(){
     return score;
 }
 
+void GameMechs::generateFood(objPosArrayList &invalidPositions){
+    int generatedX, generatedY;
+
+    // generate until valid combination is found
+    while (1){
+        generatedX = (rand() % (boardSizeX - 2)) + 1; // [1, 19]
+        generatedY = (rand() % (boardSizeY - 2)) + 1; // [1, 9]
+
+        // check if collides with snake body/any invalid items
+        if (invalidPositions.find(generatedX, generatedY) == -1){ // -1 means no matches inside invalidPOsitions 
+            foodPos = objPos(generatedX, generatedY, 'O');
+            return;
+        }
+
+    }
+}
+
 void GameMechs::generateFood(){
-    // TODO: include list checking
     int generatedX, generatedY;
 
     generatedX = (rand() % (boardSizeX - 2)) + 1; // [1, 19]

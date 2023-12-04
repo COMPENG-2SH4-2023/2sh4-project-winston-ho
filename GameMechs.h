@@ -47,8 +47,9 @@ class GameMechs
 
         int getBoardSizeX();
         int getBoardSizeY();
-      
+
         void generateFood();
+        void generateFood(objPosArrayList &invalidPositions);
         void getFoodPos(objPos &returnPos);
 
         void incrementScore();

@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "MacUILib.h"
 #include "GameMechs.h"
 #include "objPos.h"
 #include "objPosArrayList.h"
@@ -19,12 +20,16 @@ class Player
         Player(GameMechs* thisGMRef);
         ~Player();
 
-        void getPlayerPos(objPos &returnPos); // Upgrade this in iteration 3.
-        void updatePlayerDir();
-        void movePlayer();
+        void getPlayerPos(objPosArrayList &returnPos); // Upgrade this in iteration 3.
+        void updatePlayerDir(); 
+        // deleteTailElem : bool. Optional, default=true. should supply false when snake is fed food to not destroy old data
+        void movePlayer(bool deleteTailElem);
+
+        // does not modify anyhting. simply moves forward 1 space, then check if it would collide with the position
+        bool checkForFutureCollision(objPos position);
 
     private:
-        objPos playerPos;   // Upgrade this in iteration 3.       
+        objPosArrayList* playerPos;   // Upgrade this in iteration 3.       
         enum Dir myDir;
 
         // Need a reference to the Main Game Mechanisms

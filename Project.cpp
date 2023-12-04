@@ -146,11 +146,6 @@ void DrawScreen(void)
 
     // display score and other data to user 
     MacUILib_printf("score %d\n", game->getScore());
-<<<<<<< HEAD
-=======
-    
-    // DEBUG
->>>>>>> 800046f4e186b81882eedcedfa3a381aa63ce2f0
     // MacUILib_printf("snake size %d\n", playerData.getSize());
     // MacUILib_printf("head(x,y): %d %d\n", samplePlayerElem.x, samplePlayerElem.y);
     // MacUILib_printf("foodPos.x: %d, foodPos.y: %d\n", foodPos.x, foodPos.y);
